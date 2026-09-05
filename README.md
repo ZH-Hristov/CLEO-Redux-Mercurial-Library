@@ -12,9 +12,9 @@ This is achieved mainly through the exported ``registerHgMod`` function, which h
 For a working example, please see https://github.com/ZH-Hristov/GTA-SA-Dynamic-Car-Camera-Mod/blob/master/index.ts#L39C1-L70C3
 
 ## Requirements
-[CLEO](https://cleo.li/)
-[CLEO Redux](https://re.cleo.li/)
-[CLEO+](https://github.com/JuniorDjjr/CLEOPlus/releases/latest)
+[CLEO](https://cleo.li/)  
+[CLEO Redux](https://re.cleo.li/)  
+[CLEO+](https://github.com/JuniorDjjr/CLEOPlus/releases/latest)  
 
 ## Installation
 Download the mod from releases and extract ```mercurial[mem]``` into your CLEO folder
