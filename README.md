@@ -1,3 +1,5 @@
+# Mercurial Library
+
 This is a collection of typescript module files that aim to make your life easier while using Redux.
 Currently only targets San Andreas 1.0US
 
@@ -8,3 +10,11 @@ This mod also adds a menu that can be opened with Tilde (`) which lets you custo
 This is achieved mainly through the exported ``registerHgMod`` function, which handles a lot of the heavy work.
 
 For a working example, please see https://github.com/ZH-Hristov/GTA-SA-Dynamic-Car-Camera-Mod/blob/master/index.ts#L39C1-L70C3
+
+## Requirements
+[CLEO](https://cleo.li/)
+[CLEO Redux](https://re.cleo.li/)
+[CLEO+](https://github.com/JuniorDjjr/CLEOPlus/releases/latest)
+
+## Installation
+Download the mod from releases and extract ```mercurial[mem]``` into your CLEO folder
