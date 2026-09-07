@@ -16,5 +16,10 @@ For a working example, please see https://github.com/ZH-Hristov/GTA-SA-Dynamic-C
 [CLEO Redux](https://re.cleo.li/)  
 [CLEO+](https://github.com/JuniorDjjr/CLEOPlus/releases/latest)  
 
+Make sure you have ImGuiReduxWin32.cleo in your CLEO_PLUGINS folder! It can be installed when installing CLEO Redux through the setup!
+The menu will not show up otherwise!
+
+Alternatively, you can download the 32-bit build from here: https://github.com/user-grinch/ImGuiRedux/releases
+
 ## Installation
 Download the mod from releases and extract ```mercurial[mem]``` into your CLEO folder
