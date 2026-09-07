@@ -1,6 +1,13 @@
-export function PlayAnim(char: Char, animName: string, animFile: string, blendSpeed: float, loop: boolean, lockX: boolean, lockY: boolean, keepLastFrame: boolean, time: int) {
+export async function PlayAnim(char: Char, animName: string, animFile: string, blendSpeed: float, loop: boolean, lockX: boolean, lockY: boolean, keepLastFrame: boolean, time: int) {
     Streaming.RequestAnimation(animFile)
     Streaming.LoadAllModelsNow()
     Task.PlayAnim(char, animName, animFile, blendSpeed, loop, lockX, lockY, keepLastFrame, time)
+    Streaming.RemoveAnimation(animFile)
+}
+
+export async function PlayAnimNonInterruptable(char: Char, animName: string, animFile: string, blendSpeed: float, loop: boolean, lockX: boolean, lockY: boolean, keepLastFrame: boolean, time: int) {
+    Streaming.RequestAnimation(animFile)
+    Streaming.LoadAllModelsNow()
+    Task.PlayAnimNonInterruptable(char, animName, animFile, blendSpeed, loop, lockX, lockY, keepLastFrame, time)
     Streaming.RemoveAnimation(animFile)
 }
