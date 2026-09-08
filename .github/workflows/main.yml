@@ -1,0 +1,42 @@
+name: Zip and Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Put it in a folda
+        run: |
+          mkdir staging
+          rsync -av \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='staging' \
+            ./ staging/mercurial[mem]/
+
+      - name: Zip it up when ur done
+        run: |
+          cd staging
+          zip -r ../release.zip mercurial[mem]
+
+      - name: Release yourself
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.version }}
+          name: ${{ inputs.version }}
+          files: release.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
