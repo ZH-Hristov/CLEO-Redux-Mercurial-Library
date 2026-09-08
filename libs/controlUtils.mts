@@ -1,5 +1,5 @@
-import { Button } from "../../.config/enums"
-import { normalize } from "./mathUtils.mts"
+import { Button, PadId } from "../../.config/enums"
+import { normalize2D } from "./mathUtils.mts"
 
 // this is just the KeyCode enum
 const keyArray = [
@@ -210,27 +210,32 @@ interface boolDict {
 const pressedKeys: boolDict = {}
 const pressedButtons: boolDict = {}
 
+/**Runs when any controller button is pressed. Runs on M/KB too as it is bound to game actions. */
 export interface OnPadPressed {
     btnId: number
 }
 
+/**Runs when any key on the keyboard (that is in the KeyCode enum) is pressed. */
 export interface OnKeyPressed {
     keyCode: number
 }
 
+/**Runs when any controller button is released. Runs on M/KB too as it is bound to game actions. */
 export interface OnPadReleased {
     btnId: number
 }
 
+/**Runs when any key on the keyboard (that is in the KeyCode enum) is released */
 export interface OnKeyReleased {
     keyCode: number
 }
 
-export function getStickDir(paddy: number) {
+/**Returns normalized position of analog sticks. Keyboard input modifies the left stick values as well. */
+export function getStickDir(paddy: PadId) {
     const info = Pad.GetPositionOfAnalogueSticks(paddy)
     info.leftStickY *= -1
-    const lInfo = normalize([info.leftStickX, info.leftStickY])
-    const rInfo = normalize([info.rightStickX, info.rightStickY])
+    const lInfo = normalize2D([info.leftStickX, info.leftStickY])
+    const rInfo = normalize2D([info.rightStickX, info.rightStickY])
     return {lx: lInfo[0], ly: lInfo[1], rx: rInfo[0], ry: rInfo[1]}
 }
 

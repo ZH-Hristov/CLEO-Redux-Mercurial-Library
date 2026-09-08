@@ -1,86 +1,86 @@
 // Based on https://gist.github.com/gre/1650294
 
-// Slight acceleration from zero to full speed
+/**Slight acceleration from zero to full speed */ 
 export function easeInSine( t: number ) {
     return -1 * Math.cos( t * ( Math.PI / 2 ) ) + 1;
 }
 
-// Slight deceleration at the end
+/** Slight deceleration at the end */
 export function easeOutSine( t: number ) {
     return Math.sin( t * ( Math.PI / 2 ) );
 }
 
-// Slight acceleration at beginning and slight deceleration at end
+/** Slight acceleration at beginning and slight deceleration at end */
 export function easeInOutSine( t: number ) {
     return -0.5 * ( Math.cos( Math.PI * t ) - 1 );
 }
 
-// Accelerating from zero velocity
+/** Accelerating from zero velocity */
 export function easeInQuad( t: number ) {
     return t * t;
 }
 
-// Decelerating to zero velocity
+/** Decelerating to zero velocity */
 export function easeOutQuad( t: number ) {
     return t * ( 2 - t );
 }
 
-// Acceleration until halfway, then deceleration
+/** Acceleration until halfway, then deceleration */
 export function easeInOutQuad( t: number ) {
     return t < 0.5 ? 2 * t * t : - 1 + ( 4 - 2 * t ) * t;
 }
 
-// Accelerating from zero velocity
+/** Accelerating from zero velocity */
 export function easeInCubic( t: number ) {
     return t * t * t;
 }
 
-// Decelerating to zero velocity
+/** Decelerating to zero velocity */
 export function easeOutCubic( t: number ) {
     const t1 = t - 1;
     return t1 * t1 * t1 + 1;
 }
 
-// Acceleration until halfway, then deceleration
+/** Acceleration until halfway, then deceleration */
 export function easeInOutCubic( t: number ) {
     return t < 0.5 ? 4 * t * t * t : ( t - 1 ) * ( 2 * t - 2 ) * ( 2 * t - 2 ) + 1;
 }
 
-// Accelerating from zero velocity
+/** Accelerating from zero velocity */
 export function easeInQuart( t: number ) {
     return t * t * t * t;
 }
 
-// Decelerating to zero velocity
+/** Decelerating to zero velocity */
 export function easeOutQuart( t: number ) {
     const t1 = t - 1;
     return 1 - t1 * t1 * t1 * t1;
 }
 
-// Acceleration until halfway, then deceleration
+/** Acceleration until halfway, then deceleration */
 export function easeInOutQuart( t: number ) {
     const t1 = t - 1;
     return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * t1 * t1 * t1 * t1;
 }
 
-// Accelerating from zero velocity
+/** Accelerating from zero velocity */
 export function easeInQuint( t: number ) {
     return t * t * t * t * t;
 }
 
-// Decelerating to zero velocity
+/** Decelerating to zero velocity */
 export function easeOutQuint( t: number ) {
     const t1 = t - 1;
     return 1 + t1 * t1 * t1 * t1 * t1;
 }
 
-// Acceleration until halfway, then deceleration
+/** Acceleration until halfway, then deceleration */
 export function easeInOutQuint( t: number ) {
     const t1 = t - 1;
     return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * t1 * t1 * t1 * t1 * t1;
 }
 
-// Accelerate exponentially until finish
+/** Accelerate exponentially until finish */
 export function easeInExpo( t: number ) {
 
     if( t === 0 ) {
@@ -91,7 +91,7 @@ export function easeInExpo( t: number ) {
 
 }
 
-// Initial exponential acceleration slowing to stop
+/** Initial exponential acceleration slowing to stop */
 export function easeOutExpo( t: number ) {
 
     if( t === 1 ) {
@@ -102,7 +102,7 @@ export function easeOutExpo( t: number ) {
 
 }
 
-// Exponential acceleration and deceleration
+/** Exponential acceleration and deceleration */
 export function easeInOutExpo( t: number ) {
     
     if( t === 0 || t === 1 ) {
@@ -120,7 +120,7 @@ export function easeInOutExpo( t: number ) {
 
 }
 
-// Increasing velocity until stop
+/** Increasing velocity until stop */
 export function easeInCirc( t: number ) {
 
     const scaledTime = t / 1;
@@ -128,7 +128,7 @@ export function easeInCirc( t: number ) {
 
 }
 
-// Start fast, decreasing velocity until stop
+/** Start fast, decreasing velocity until stop */
 export function easeOutCirc( t: number ) {
 
     const t1 = t - 1;
@@ -136,7 +136,7 @@ export function easeOutCirc( t: number ) {
 
 }
 
-// Fast increase in velocity, fast decrease in velocity
+/** Fast increase in velocity, fast decrease in velocity */
 export function easeInOutCirc( t: number ) {
 
     const scaledTime = t * 2;
@@ -150,14 +150,14 @@ export function easeInOutCirc( t: number ) {
 
 }
 
-// Slow movement backwards then fast snap to finish
+/** Slow movement backwards then fast snap to finish */
 export function easeInBack( t: number, magnitude = 1.70158 ) {
 
     return t * t * ( ( magnitude + 1 ) * t - magnitude );
 
 }
 
-// Fast snap to backwards point then slow resolve to finish
+/** Fast snap to backwards point then slow resolve to finish */
 export function easeOutBack( t: number, magnitude = 1.70158 ) {
 
     const scaledTime = ( t / 1 ) - 1;
@@ -168,7 +168,7 @@ export function easeOutBack( t: number, magnitude = 1.70158 ) {
 
 }
 
-// Slow movement backwards, fast snap to past finish, slow resolve to finish
+/** Slow movement backwards, fast snap to past finish, slow resolve to finish */
 export function easeInOutBack( t: number, magnitude = 1.70158 ) {
 
     const scaledTime = t * 2;
@@ -189,7 +189,7 @@ export function easeInOutBack( t: number, magnitude = 1.70158 ) {
     );
 
 }
-// Bounces slowly then quickly to finish
+/** Bounces slowly then quickly to finish */
 export function easeInElastic( t: number, magnitude = 0.7 ) {
 
     if( t === 0 || t === 1 ) {
@@ -209,7 +209,7 @@ export function easeInElastic( t: number, magnitude = 0.7 ) {
 
 }
 
-// Fast acceleration, bounces to zero
+/** Fast acceleration, bounces to zero */
 export function easeOutElastic( t: number, magnitude = 0.7 ) {
     
     if( t === 0 || t === 1 ) {
@@ -227,7 +227,7 @@ export function easeOutElastic( t: number, magnitude = 0.7 ) {
 
 }
 
-// Slow start and end, two bounces sandwich a fast motion
+/** Slow start and end, two bounces sandwich a fast motion */
 export function easeInOutElastic( t: number, magnitude = 0.65 ) {
 
     if( t === 0 || t === 1 ) {
@@ -254,7 +254,7 @@ export function easeInOutElastic( t: number, magnitude = 0.65 ) {
 
 }
 
-// Bounce to completion
+/** Bounce to completion */
 export function easeOutBounce( t: number ) {
 
     const scaledTime = t / 1;
@@ -282,12 +282,12 @@ export function easeOutBounce( t: number ) {
 
 }
 
-// Bounce increasing in velocity until completion
+/** Bounce increasing in velocity until completion */
 export function easeInBounce( t: number ) {
     return 1 - easeOutBounce( 1 - t );
 }
 
-// Bounce in and bounce out
+/** Bounce in and bounce out */
 export function easeInOutBounce( t: number ) {
 
     if( t < 0.5 ) {

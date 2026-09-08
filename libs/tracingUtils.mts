@@ -11,13 +11,14 @@ export interface traceData {
     surfaceType: SurfaceType
 }
 
-function getEntityType(address: int) {
-    if(address == 0x0) {return 0}
-    const typey = Memory.ReadWithOffset(address, 0x36, 1)
-    return typey & 7
-}
-
 export class trace {
+
+    /**Casts a ray from startPos to endPos and returns a structure with hit data if the ray hit anything.
+     * @param startPos Position ray will start from
+     * @param endPos Position ray will try to travel to
+     * @param ignoreEnt Address of entity to ignore, e.g. the player character
+     * @returns Hit data. See exported traceData interface
+     */
     static line(startPos: Vector3, endPos: Vector3, ignoreEnt?: int): traceData | undefined {
         const SPCVecAddr = Memory.Allocate(8)
         const EPCVecAddr = Memory.Allocate(8)

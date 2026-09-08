@@ -171,6 +171,7 @@ export class Vector3 {
         return new Vector3(1, 1, 1)
     }
 
+    /**Gets a direction vector from a heading value like Char.getHeading() */
     static fromHeading(heading: float): Vector3 {
         const radians = heading * (Math.PI / 180)
         return new Vector3(Math.cos(radians), Math.sin(radians), 0)

@@ -1,23 +1,25 @@
-import { PadId } from "../../.config/sa.enums.mts"
+import { KeyCode, PadId } from "../../.config/sa.enums.mts"
 import { getStickDir } from "./controlUtils.mts"
-import { normalize, rotate2D, dotProduct, normalize3D } from "./mathUtils.mts"
+import { normalize2D, rotate2D, dotProduct2D } from "./mathUtils.mts"
+import { Vector3 } from "./vectorLibrary.mts"
 
 export let camStickDotForw: number = 0
 export let camStickDotRight: number = 0
 
+// TODO: this probably won't work now that the libs have been converted to .mts, probably will have to refactor it
 async function cameraStickRelativity() {
     while (true) {
         const remInfo = getStickDir(PadId.Pad1)
         const camDir = getCamDir()
         const camDirRight = getCamDirRight()
 
-        const v1 = normalize([remInfo.lx, remInfo.ly])
-        const v2 = normalize([-camDir.x, camDir.y])
-        const v2r = normalize([-camDirRight.x, camDirRight.y])
+        const v1 = normalize2D([remInfo.lx, remInfo.ly])
+        const v2 = normalize2D([-camDir.x, camDir.y])
+        const v2r = normalize2D([-camDirRight.x, camDirRight.y])
 
         const stickWorld = rotate2D(v1, (Camera.GetActiveRotation().z * (Math.PI / 180) ))
-        camStickDotForw = dotProduct(stickWorld, v2)
-        camStickDotRight = dotProduct(stickWorld, v2r) * -1
+        camStickDotForw = dotProduct2D(stickWorld, v2)
+        camStickDotRight = dotProduct2D(stickWorld, v2r) * -1
         await asyncWait(0)
     }
 }
@@ -47,56 +49,32 @@ export function remapCamPitchFrac() {
     }
 }
 
-export function getCamDir() {
+/**Returns forward direction of the camera as a Vector3. */
+export function getCamDir(): Vector3 {
     const camRot = Camera.GetActiveRotation()
     const pitch = remapCamPitchFrac()
     const oYaw = camRot.z
 
     const radians = oYaw * (Math.PI / 180)
 
-    return {x: Math.sin(radians), y: Math.cos(radians), z: pitch}
+    return new Vector3(Math.sin(radians), Math.cos(radians), pitch)
 }
 
-export function getCamDirNormalized() {
-    const camRot = Camera.GetActiveRotation()
-    const pitch = remapCamPitchFrac()
-    const oYaw = camRot.z
-
-    const radians = oYaw * (Math.PI / 180)
-
-    const dir = {x: Math.sin(radians), y: Math.cos(radians), z: pitch}
-    const normaled = normalize3D( [dir.x, dir.y, dir.z] )
-
-    return {x: normaled[0], y: normaled[1], z: normaled[2]}
-}
-
-export function getCamDirRight() {
+/**Returns right direction of the camera as a Vector3. */
+export function getCamDirRight(): Vector3 {
     const camRot = Camera.GetActiveRotation()
     const pitch = remapCamPitchFrac()
     const oYaw = camRot.z + 90
 
     const radians = oYaw * (Math.PI / 180)
 
-    return {x: Math.sin(radians), y: Math.cos(radians), z: pitch}
+    return new Vector3(Math.sin(radians), Math.cos(radians), pitch)
 }
 
-
-export function getCamDirRightNormalized() {
-    const camRot = Camera.GetActiveRotation()
-    const pitch = remapCamPitchFrac()
-    const oYaw = camRot.z + 90
-
-    const radians = oYaw * (Math.PI / 180)
-
-    const dir = {x: Math.sin(radians), y: Math.cos(radians), z: pitch}
-    const normaled = normalize3D( [dir.x, dir.y, dir.z] )
-
-    return {x: normaled[0], y: normaled[1], z: normaled[2]}
-}
-
+/**Shows debug info about the camera on screen. Press TAB to hide. */
 export async function camInfo() {
 
-    while(true) {
+    while(!Pad.IsKeyPressed(KeyCode.Tab)) {
         const camRot = Camera.GetActiveRotation()
         const remapped = remapCamPitch()
 
