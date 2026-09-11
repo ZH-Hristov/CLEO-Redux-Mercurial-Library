@@ -1,4 +1,4 @@
-import { ImGuiCond, KeyCode } from "../.config/sa.enums.mts";
+import { ImGuiCol, ImGuiCond, KeyCode } from "../.config/sa.enums.mts";
 import { OnKeyPressed } from "./libs/controlUtils.mts";
 import { modSettingType, SettingList, registerHgModEvent, rModData, sendSettingUpdate, sendButtonClick } from "./merc_interface.mts";
 
@@ -22,6 +22,9 @@ async function initHgMenu() {
         const selectedModKey = modKeys[tab]
 
         if (modCount > 0 && selectedModKey) {
+            ImGui.PushStyleColor( ImGuiCol.Text, 0, 255, 100, 255 )
+            ImGui.TextWrapped("You can click on a slider and press TAB to input values with the keyboard.")
+            ImGui.PopStyleColor(1)
             drawHgMod(selectedModKey)
         }
 
