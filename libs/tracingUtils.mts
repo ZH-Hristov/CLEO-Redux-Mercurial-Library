@@ -20,8 +20,8 @@ export class trace {
      * @returns Hit data. See exported traceData interface
      */
     static line(startPos: Vector3, endPos: Vector3, ignoreEnt?: int): traceData | undefined {
-        const SPCVecAddr = Memory.Allocate(8)
-        const EPCVecAddr = Memory.Allocate(8)
+        const SPCVecAddr = Memory.Allocate(12)
+        const EPCVecAddr = Memory.Allocate(12)
         const CColPointAddr = Memory.Allocate(0x2C)
         const OutEntity = Memory.Allocate(4)
         // CVector Constructor
