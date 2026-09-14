@@ -17,9 +17,17 @@ export class trace {
      * @param startPos Position ray will start from
      * @param endPos Position ray will try to travel to
      * @param ignoreEnt Address of entity to ignore, e.g. the player character
+     * @param hitBuildings Whether trace should hit buildings
+     * @param hitVehicles Whether trace should hit vehicles
+     * @param hitPeds Whether trace should hit peds
+     * @param hitObjects Whether trace should hit objects
+     * @param hitDummies Whether trace should hit dummy objects
+     * @param doSeeThroughCheck Whether trace should pass through objects marked as see-through
+     * @param doCameraIgnoreCheck Whether trace should pass through objects marked to-be-ignored by camera
+     * @param doShootThroughCheck Whether trace should pass through objects marked as shoot-through
      * @returns Hit data. See exported traceData interface
      */
-    static line(startPos: Vector3, endPos: Vector3, ignoreEnt?: int): traceData | undefined {
+    static line(startPos: Vector3, endPos: Vector3, ignoreEnt?: int, hitBuildings: boolean = true, hitVehicles: boolean = true, hitPeds: boolean = true, hitObjects: boolean = true, hitDummies: boolean = false, doSeeThroughCheck: boolean = false, doCameraIgnoreCheck: boolean = false, doShootThroughCheck: boolean = false): traceData | undefined {
         const SPCVecAddr = Memory.Allocate(12)
         const EPCVecAddr = Memory.Allocate(12)
         const CColPointAddr = Memory.Allocate(0x2C)
@@ -29,8 +37,8 @@ export class trace {
         const startVec = Memory.Fn.ThiscallI32(0x406D20, SPCVecAddr)(Memory.FromFloat(startPos.x), Memory.FromFloat(startPos.y), Memory.FromFloat(startPos.z))
         const endVec = Memory.Fn.ThiscallI32(0x406D20, EPCVecAddr)(Memory.FromFloat(endPos.x), Memory.FromFloat(endPos.y), Memory.FromFloat(endPos.z))
 
-        if(ignoreEnt) {Memory.WriteI32(0xB7CD68, ignoreEnt)} // seems to crash
-        const hitSomething = Memory.Fn.CdeclU8(0x56BA00)(startVec, endVec, CColPointAddr, OutEntity, 1, 1, 1, 1, 0, 0, 0, 0)
+        if(ignoreEnt) {Memory.WriteI32(0xB7CD68, ignoreEnt)}
+        const hitSomething = Memory.Fn.CdeclU8(0x56BA00)(startVec, endVec, CColPointAddr, OutEntity, hitBuildings ? 1 : 0, hitVehicles ? 1: 0, hitPeds ? 1: 0, hitObjects ? 1 : 0, hitDummies ? 1 : 0, doSeeThroughCheck ? 1 : 0, doCameraIgnoreCheck ? 1 : 0, doShootThroughCheck ? 1 : 0)
         if(ignoreEnt) {Memory.WriteI32(0xB7CD68, 0)}
     
         let retStruct

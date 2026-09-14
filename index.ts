@@ -99,8 +99,9 @@ async function drawHgMod(modName: string) {
 
     if (mod.buttons) {
         for (const [btnName, btnData] of Object.entries(mod.buttons)) {
-            if (ImGui.Button(btnData.niceName, 300, 50)) {
+            if (ImGui.Button(btnData.niceName, 300, 50) && !clickCD) {
                 sendButtonClick(mod.name, btnName)
+                clickDCD()
             }
             if (btnData.description && ImGui.IsItemHovered(btnData.niceName)) {
                 ImGui.SetTooltip(btnData.description)
