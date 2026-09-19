@@ -22,4 +22,4 @@ The menu will not show up otherwise!
 Alternatively, you can download the 32-bit build from here: https://github.com/user-grinch/ImGuiRedux/releases
 
 ## Installation
-Download the mod from releases and extract ```mercurial[mem]``` into your CLEO folder
+Download the mod from releases and extract ```mercurial``` into your CLEO folder

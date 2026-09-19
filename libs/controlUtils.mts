@@ -1,4 +1,5 @@
 import { Button, PadId } from "../../.config/enums"
+import { OnKeyPressed, OnKeyReleased, OnPadPressed, OnPadReleased } from "../merc_interface.mts"
 import { normalize2D } from "./mathUtils.mts"
 
 // this is just the KeyCode enum
@@ -210,26 +211,6 @@ interface boolDict {
 const pressedKeys: boolDict = {}
 const pressedButtons: boolDict = {}
 
-/**Runs when any controller button is pressed. Runs on M/KB too as it is bound to game actions. */
-export interface OnPadPressed {
-    btnId: number
-}
-
-/**Runs when any key on the keyboard (that is in the KeyCode enum) is pressed. */
-export interface OnKeyPressed {
-    keyCode: number
-}
-
-/**Runs when any controller button is released. Runs on M/KB too as it is bound to game actions. */
-export interface OnPadReleased {
-    btnId: number
-}
-
-/**Runs when any key on the keyboard (that is in the KeyCode enum) is released */
-export interface OnKeyReleased {
-    keyCode: number
-}
-
 /**Returns normalized position of analog sticks. Keyboard input modifies the left stick values as well. */
 export function getStickDir(paddy: PadId) {
     const info = Pad.GetPositionOfAnalogueSticks(paddy)
@@ -240,6 +221,8 @@ export function getStickDir(paddy: PadId) {
 }
 
 async function handleCallbacks() {
+    log("[Mercurial] Registered control callbacks")
+    log(__filename)
 
     while (true) {
         await asyncWait(0)

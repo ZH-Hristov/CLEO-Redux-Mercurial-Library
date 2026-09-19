@@ -26,12 +26,26 @@ export class Vector3 {
         )
     }
 
+    addMut(v: Vector3): this {
+        this.x += v.x
+        this.y += v.y
+        this.z += v.z
+        return this
+    }
+
     sub(v: Vector3): Vector3 {
         return new Vector3(
             this.x - v.x,
             this.y - v.y,
             this.z - v.z,
         )
+    }
+
+    subMut(v: Vector3): this {
+        this.x -= v.x
+        this.y -= v.y
+        this.z -= v.z
+        return this
     }
 
     mul(s: number): Vector3 {

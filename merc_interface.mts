@@ -10,7 +10,8 @@ export interface modSetting {
 
 export interface modButton {
     niceName: string,
-    description?: string
+    description?: string,
+    func?: Function
 }
 
 export interface buttonDict {
@@ -47,6 +48,26 @@ export interface settingUpdateInterface {
     newSettings: { [key: string]: number|boolean }
 }
 
+/**Runs when any controller button is pressed. Runs on M/KB too as it is bound to game actions. */
+export interface OnPadPressed {
+    btnId: number
+}
+
+/**Runs when any key on the keyboard (that is in the KeyCode enum) is pressed. */
+export interface OnKeyPressed {
+    keyCode: number
+}
+
+/**Runs when any controller button is released. Runs on M/KB too as it is bound to game actions. */
+export interface OnPadReleased {
+    btnId: number
+}
+
+/**Runs when any key on the keyboard (that is in the KeyCode enum) is released */
+export interface OnKeyReleased {
+    keyCode: number
+}
+
 export async function registerUpdateListener(modName: string, setList: SettingList) {
     addEventListener<registerHgListenerEvent>( "OnHgMenuSettingUpdate", (ev) => {
         const evData = ev.data as settingUpdateInterface
@@ -56,6 +77,17 @@ export async function registerUpdateListener(modName: string, setList: SettingLi
             setList.setValue(k, v)
         }
     } )
+}
+
+export async function registerButtonListener(modName: string, buttons: buttonDict) {
+    addEventListener<OnHgMenuButtonClickEvent>("OnHgMenuButtonClick", (ev) => {
+        if (!ev.data) {return}
+        if (ev.data.modName != modName) {return}
+        const curButton = buttons[ev.data.btnId]
+        if (curButton.func) {
+            curButton.func()
+        }
+    })
 }
 
 export async function sendSettingUpdate( modName: string, data: { [key: string]: any } ) {
@@ -80,6 +112,15 @@ export async function registerHgMod( modName: string, settings: SettingList, but
     }
 
     registerUpdateListener(modName, settings)
+
+    if(buttons) {
+        for (const [k, v] of Object.entries(buttons as buttonDict)) {
+            if (v.func) {
+                registerButtonListener(modName, buttons)
+                break
+            }
+        }
+    }
 
     await asyncWait(3000)
     dispatchEvent<registerHgModEvent>("registerHgMenuMod", {modData: newModData})

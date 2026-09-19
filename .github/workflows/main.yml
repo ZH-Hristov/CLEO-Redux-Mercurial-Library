@@ -25,12 +25,12 @@ jobs:
             --exclude='.git' \
             --exclude='.github' \
             --exclude='staging' \
-            ./ staging/mercurial[mem]/
+            ./ staging/mercurial/
 
       - name: Zip it up when ur done
         run: |
           cd staging
-          zip -r ../release.zip mercurial[mem]
+          zip -r ../release.zip mercurial
 
       - name: Release yourself
         uses: softprops/action-gh-release@v2

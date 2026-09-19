@@ -1,9 +1,11 @@
-import { ImGuiCol, ImGuiCond, KeyCode } from "../.config/sa.enums.mts";
-import { OnKeyPressed } from "./libs/controlUtils.mts";
+import { ImGuiCol, ImGuiCond } from "../.config/sa.enums.mts";
+import { OnKeyPressed } from "./merc_interface.mts";
 import { modSettingType, SettingList, registerHgModEvent, rModData, sendSettingUpdate, sendButtonClick } from "./merc_interface.mts";
 
 let menuOpen = false
 const registeredMods: Record<string, rModData> = {}
+
+const menuKey = IniFile.ReadInt("./config.ini", "CONFIG", "MenuKey")
 
 async function initHgMenu() {
     menuOpen = true
@@ -123,11 +125,15 @@ addEventListener<registerHgModEvent>("registerHgMenuMod", (event) => {
 
 addEventListener<OnKeyPressed>("KeyPressed", (ev) => {
     if (ev.data) {
-        if(ev.data.keyCode == KeyCode.Oem3) {
+        if(ev.data.keyCode == menuKey) {
+            log("PRESSED OPEN")
             if (menuOpen) {
                 menuOpen = false
             } else {
-                initHgMenu()
+                initHgMenu().catch( (e) => {
+                    const msg = e instanceof Error ? e.message : String(e)
+                    log(msg)
+                } )
             }
         }
     }
