@@ -1,4 +1,5 @@
 import { ImGuiCol, ImGuiCond } from "../.config/sa.enums.mts";
+import { handleControlCallbacks } from "./libs/controlUtils.mts";
 import { OnKeyPressed } from "./merc_interface.mts";
 import { modSettingType, SettingList, registerHgModEvent, rModData, sendSettingUpdate, sendButtonClick } from "./merc_interface.mts";
 
@@ -6,6 +7,21 @@ let menuOpen = false
 const registeredMods: Record<string, rModData> = {}
 
 const menuKey = IniFile.ReadInt("./config.ini", "CONFIG", "MenuKey")
+
+function drawTooltip(msg: string) {
+    const ts = ImGui.CalcTextSize(msg)
+    const cp = Mouse.GetCursorPos()
+
+    Text.UseCommands(true)
+    Text.DisplayFormatted(20, 20, `${cp ? cp.x : 0}, ${cp ? cp.y : 0}` )
+    Text.UseCommands(false)
+
+    ImGui.SetNextWindowSize(ts.width, ts.height, ImGuiCond.Always)
+    ImGui.SetNextWindowPos(cp ? cp.x : 0, cp ? cp.y : 0, ImGuiCond.Always)
+    ImGui.Begin("TooltipHg", menuOpen, true, true, true, false)
+    ImGui.Text(msg)
+    ImGui.End()
+}
 
 async function initHgMenu() {
     menuOpen = true
@@ -96,7 +112,7 @@ async function drawHgMod(modName: string) {
     }
 
     if (ImGui.IsItemHovered("Merc_SettingReset")) {
-        ImGui.SetTooltip("Reset all settings to their defaults.")
+        drawTooltip("Reset all settings to their defaults.")
     }
 
     if (mod.buttons) {
@@ -106,7 +122,7 @@ async function drawHgMod(modName: string) {
                 clickDCD()
             }
             if (btnData.description && ImGui.IsItemHovered(btnData.niceName)) {
-                ImGui.SetTooltip(btnData.description)
+                drawTooltip(btnData.description)
             }
         }
     }
@@ -138,3 +154,5 @@ addEventListener<OnKeyPressed>("KeyPressed", (ev) => {
         }
     }
 })
+
+handleControlCallbacks()

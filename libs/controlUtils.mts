@@ -220,9 +220,8 @@ export function getStickDir(paddy: PadId) {
     return {lx: lInfo[0], ly: lInfo[1], rx: rInfo[0], ry: rInfo[1]}
 }
 
-async function handleCallbacks() {
+export async function handleControlCallbacks() {
     log("[Mercurial] Registered control callbacks")
-    log(__filename)
 
     while (true) {
         await asyncWait(0)
@@ -257,5 +256,3 @@ async function handleCallbacks() {
     }
 
 }
-
-handleCallbacks()
